@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @Injectable({providedIn: 'root'})
 export class ServiceNameService {
@@ -27,7 +28,8 @@ import { HomeComponent } from './home/home.component';
    imports: [
       BrowserModule,
       HttpClientModule,
-      FormsModule
+      FormsModule,
+      BsDropdownModule.forRoot()
    ],
    providers: [
       AuthService,
