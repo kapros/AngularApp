@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { RouterModule } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class ServiceNameService {
@@ -17,19 +18,27 @@ import { AuthService } from './_services/auth.service';
 import { RegisterComponent } from './register/register.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor.service';
 import { HomeComponent } from './home/home.component';
+import { MemberListComponent } from './member-list/member-list.component';
+import { ListsComponent } from './lists/lists.component';
+import { MessagesComponent } from './messages/messages.component';
+import { appRoutes } from './routes';
 
 @NgModule({
    declarations: [
       AppComponent,
       NavComponent,
       RegisterComponent,
-      HomeComponent
+      HomeComponent,
+      MemberListComponent,
+      ListsComponent,
+      MessagesComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
-      BsDropdownModule.forRoot()
+      BsDropdownModule.forRoot(),
+      RouterModule.forRoot(appRoutes)
    ],
    providers: [
       AuthService,
