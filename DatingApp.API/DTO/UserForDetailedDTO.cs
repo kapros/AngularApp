@@ -33,6 +33,6 @@ namespace DatingApp.API.DTO
 
         public string PhotUrl { get; set; }
 
-        public ICollection<Photo> Photos { get; set; }
+        public ICollection<PhotosForDetailedDTO> Photos { get; set; }
     }
 }
