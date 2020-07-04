@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 })
 export class UserService {
 
-  baseUrl: environment.apiUrl;
+  baseUrl = environment.apiUrl;
 
   constructor() { }
 }
