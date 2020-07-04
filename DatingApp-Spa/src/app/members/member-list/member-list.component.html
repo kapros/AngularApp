@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container mt-5">
     <div class="row">
-        <div class="col-lg2 col-md3 col-fm-6"></div>
-        <p *ngFor="let user of users">{{ user.knownAs }}</p>
+        <div *ngFor="let user of users" class="col-lg2 col-md3 col-fm-6">
+        <app-member-card [user]="user"></app-member-card>
     </div>
 </div>
