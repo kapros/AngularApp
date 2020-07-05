@@ -21,14 +21,6 @@
             Base drop zone
         </div>
 
-        <div ng2FileDrop
-             [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
-             (fileOver)="fileOverAnother($event)"
-             [uploader]="uploader"
-             class="well my-drop-zone">
-            Another drop zone
-        </div>
-
         Multiple
         <input type="file" ng2FileSelect [uploader]="uploader" multiple  /><br/>
 
