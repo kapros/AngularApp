@@ -3,6 +3,8 @@ import { FileUploader } from 'ng2-file-upload';
 import { Photo } from 'src/app/_models/photo';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/_services/auth.service';
+import { UserService } from 'src/app/_services/user.service';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 
 @Component({
   selector: 'app-photo-editor',
@@ -16,8 +18,9 @@ export class PhotoEditorComponent implements OnInit {
   hasBaseDropZoneOver: boolean;
   response: string;
   baseUrl = environment.apiUrl;
+  currentMain: Photo;
  
-  constructor (private auth: AuthService){
+  constructor (private auth: AuthService, private userService: UserService, private alertify: AlertifyService ) {
     this.hasBaseDropZoneOver = false;
  
     this.response = '';
@@ -45,5 +48,30 @@ export class PhotoEditorComponent implements OnInit {
       });
 
       this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+
+      this.uploader.onSuccessItem = (item, response, status, headers) => {
+        if (response) {
+          const res: Photo = JSON.parse(response);
+          const photo = {
+            id: res.id,
+            url: res.url,
+            dateAdded: res.dateAdded,
+            description: res.description,
+            isMain: res.isMain
+          };
+          this.photos.push(photo);
+        }
+      }
+  }
+
+  setMainPhoto(photo: Photo) {
+    this.userService.setMainPhoto(this.auth.decodedToken.nameId, photo.id).subscribe(() => {
+      this.currentMain = this.photos.filter(x => x.isMain === true)[0];
+      this.currentMain.isMain = false;
+      photo.isMain = true;
+    }, error => {
+      this.alertify.error(error);
+    }
+    )
   }
 }
