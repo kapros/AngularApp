@@ -1,4 +1,5 @@
-﻿using DatingApp.API.Data;
+﻿using AutoMapper;
+using DatingApp.API.Data;
 using DatingApp.API.DTO;
 using DatingApp.API.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -19,11 +20,13 @@ namespace DatingApp.API.Controllers
     {
         private readonly IAuthRepository _authRepository;
         private readonly IConfiguration _cfg;
+        private readonly IMapper _mapper;
 
-        public AuthController(IAuthRepository authRepository, IConfiguration cfg)
+        public AuthController(IAuthRepository authRepository, IConfiguration cfg, IMapper mapper)
         {
             _authRepository = authRepository;
             _cfg = cfg;
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -44,9 +47,9 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserForLoginDto user)
+        public async Task<IActionResult> Login(UserForLoginDto userLoginData)
         {
-            var userFromRepo = await _authRepository.LoginAsync(user.Username, user.Password);
+            var userFromRepo = await _authRepository.LoginAsync(userLoginData.Username, userLoginData.Password);
             if (userFromRepo == null)
                 return Unauthorized("Username and password does not match");
 
@@ -70,9 +73,12 @@ namespace DatingApp.API.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
+            var user = _mapper.Map<UserForListDTO>(userFromRepo);
+
             return Ok(new
             { 
-                token = tokenHandler.WriteToken(token)
+                token = tokenHandler.WriteToken(token),
+                user
             });
         }
     }
