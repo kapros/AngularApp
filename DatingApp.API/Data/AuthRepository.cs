@@ -41,12 +41,9 @@ namespace DatingApp.API.Data
             return user;
         }
 
-        public async Task<bool> UserExistsAsync(string username)
-        {
-            if (await _ctx.Users.AnyAsync(x => x.Username == username))
-                return true;
-            return false;
-        }
+        public async Task<bool> UserExistsAsync(string username) =>
+            await _ctx.Users.AnyAsync(x => x.Username.Equals(username, StringComparison.OrdinalIgnoreCase));
+        
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))

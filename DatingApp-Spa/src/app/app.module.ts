@@ -11,6 +11,7 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimeagoModule } from 'ngx-timeago';
 
 @Injectable({providedIn: 'root'})
 export class ServiceNameService {
@@ -63,6 +64,7 @@ export function tokenGetter() {
       NgxGalleryModule,
       FileUploadModule,
       ReactiveFormsModule,
+      TimeagoModule.forRoot(),
       TabsModule.forRoot(),
       BsDropdownModule.forRoot(),
       BsDatepickerModule.forRoot(),
